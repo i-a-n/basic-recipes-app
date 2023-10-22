@@ -24,7 +24,7 @@ export const Dashboard = ({
               textAlign="left"
               image={`images/${recipeName}.jpg`}
               title={recipes[recipeName].title}
-              description={recipeName}
+              description={recipes[recipeName].description}
               onClick={() => setSelectedRecipe(recipeName)}
             />
           </EuiFlexItem>
