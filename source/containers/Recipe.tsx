@@ -61,7 +61,7 @@ export const Recipe = ({
           {ingredientGroup.groupName ? (
             <h4>{ingredientGroup.groupName}</h4>
           ) : null}
-          <EuiListGroup size="s" maxWidth={false}>
+          <EuiListGroup size="s" maxWidth={false} wrapText={true}>
             {ingredientGroup.items.map((ingredient, index) => (
               <EuiListGroupItem
                 key={index}
