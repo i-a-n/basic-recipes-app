@@ -5,42 +5,72 @@ import {
   EuiFlexItem,
   EuiFlyoutBody,
   EuiFlyoutHeader,
+  EuiListGroupItem,
+  EuiListGroup,
   EuiSpacer,
+  EuiSteps,
   EuiText,
   EuiTitle,
 } from "@elastic/eui";
-import { Recipe as RecipeType, labels } from "json-recipes";
-import { isIngredientGroup } from "../utilities";
+import { Ingredient, Recipe as RecipeType, labels } from "json-recipes";
 
-export const Recipe = ({ recipe }: { recipe: RecipeType }) => {
-  // this is complicated by the fact we could be dealing with Ingredients
-  // or IngredientGroups. so just for thoroughness, we go through each one
-  // and determine which one it is. then push a node up accordingly.
-  // wordy, but, whatever.
+export const Recipe = ({
+  recipe,
+  recipeSlug,
+}: {
+  recipe: RecipeType;
+  recipeSlug: string;
+}) => {
+  function getIngredientLabel(ingredient: Ingredient) {
+    let boldPart;
+
+    // Check if both quantity and name are present
+    if (ingredient.quantity && ingredient.name) {
+      boldPart = (
+        <>
+          <strong>{ingredient.quantity}</strong> {" - "} {ingredient.name}
+        </>
+      );
+    }
+
+    // If only the name is present, display it in strong tags
+    if (!ingredient.quantity && ingredient.name) {
+      boldPart = <strong>{ingredient.name}</strong>;
+    }
+
+    return (
+      <>
+        {boldPart}
+        {ingredient.notes ? (
+          <>
+            <br />
+            <EuiText color="subdued" size="xs">
+              {ingredient.notes}
+            </EuiText>
+          </>
+        ) : null}
+      </>
+    );
+  }
   const renderIngredients = () => {
     const ingredients: React.ReactElement[] = [];
 
-    recipe.ingredients.forEach((groupOrIngredient, idx) => {
-      if (isIngredientGroup(groupOrIngredient)) {
-        ingredients.push(
-          <span key={idx}>
-            <h4>{groupOrIngredient.groupName}</h4>
-            {groupOrIngredient.items.map((ingredient, index) => (
-              <p key={index}>
-                {ingredient.quantity} - {ingredient.name}{" "}
-                {ingredient.notes ? `(${ingredient.notes})` : ""}
-              </p>
+    recipe.ingredients.forEach((ingredientGroup, idx) => {
+      ingredients.push(
+        <span key={idx}>
+          {ingredientGroup.groupName ? (
+            <h4>{ingredientGroup.groupName}</h4>
+          ) : null}
+          <EuiListGroup size="s" maxWidth={false}>
+            {ingredientGroup.items.map((ingredient, index) => (
+              <EuiListGroupItem
+                key={index}
+                label={getIngredientLabel(ingredient)}
+              />
             ))}
-          </span>
-        );
-      } else {
-        ingredients.push(
-          <p key={idx}>
-            {groupOrIngredient.quantity} - {groupOrIngredient.name}{" "}
-            {groupOrIngredient.notes ? `(${groupOrIngredient.notes})` : ""}
-          </p>
-        );
-      }
+          </EuiListGroup>
+        </span>
+      );
     });
 
     return ingredients;
@@ -49,26 +79,35 @@ export const Recipe = ({ recipe }: { recipe: RecipeType }) => {
   return (
     <>
       <EuiFlyoutHeader hasBorder>
-        <EuiTitle size="s">
-          <h2>{recipe.title}</h2>
-        </EuiTitle>
+        <EuiFlexGroup>
+          <EuiFlexItem grow={false} style={{ maxWidth: "200px" }}>
+            <img src={`./images/${recipeSlug}.jpg`} />
+          </EuiFlexItem>
+          <EuiFlexItem>
+            <EuiTitle size="s">
+              <h2>{recipe.title}</h2>
+            </EuiTitle>
 
-        <EuiSpacer size="xs" />
+            <EuiSpacer size="xs" />
 
-        <EuiText size="s" color="subdued">
-          {`added by ${recipe.creator.username}`}
-        </EuiText>
+            <EuiText size="s" color="subdued">
+              {`added by ${recipe.creator.username}`}
+            </EuiText>
 
-        <EuiSpacer size="xs" />
+            <EuiSpacer size="xs" />
 
-        {recipe.labels?.map((label, index) => (
-          <EuiBadge
-            key={label + index}
-            color={labels[label]?.color ?? "CCCCCC"}
-          >
-            {label}
-          </EuiBadge>
-        ))}
+            <div>
+              {recipe.labels?.map((label, index) => (
+                <EuiBadge
+                  key={label + index}
+                  color={labels[label]?.color ?? "CCCCCC"}
+                >
+                  {label}
+                </EuiBadge>
+              ))}
+            </div>
+          </EuiFlexItem>
+        </EuiFlexGroup>
       </EuiFlyoutHeader>
       <EuiFlyoutBody>
         <EuiText size="s">
@@ -80,11 +119,17 @@ export const Recipe = ({ recipe }: { recipe: RecipeType }) => {
 
         <EuiText>
           <h3>Instructions:</h3>
-          <ol>
-            {recipe.instructions.map((step, index) => (
-              <li key={index}>{step}</li>
-            ))}
-          </ol>
+          <EuiSteps
+            titleSize="xs"
+            steps={recipe.instructions.map((step, index) => ({
+              title: `Step ${index + 1}`,
+              children: (
+                <EuiText>
+                  <p>{step}</p>
+                </EuiText>
+              ),
+            }))}
+          />
         </EuiText>
 
         <EuiSpacer />

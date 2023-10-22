@@ -16,17 +16,19 @@ export const Dashboard = ({
 }) => (
   <EuiPageTemplate.Section>
     <EuiFlexGrid columns={4}>
-      {Object.keys(recipes).map((recipeName) => (
-        <EuiFlexItem grow={false} key={recipeName}>
-          <EuiCard
-            textAlign="left"
-            image={`images/${recipeName}.jpg`}
-            title={recipes[recipeName].title}
-            description={recipeName}
-            onClick={() => setSelectedRecipe(recipeName)}
-          />
-        </EuiFlexItem>
-      ))}
+      {Object.keys(recipes)
+        .sort()
+        .map((recipeName) => (
+          <EuiFlexItem grow={false} key={recipeName}>
+            <EuiCard
+              textAlign="left"
+              image={`images/${recipeName}.jpg`}
+              title={recipes[recipeName].title}
+              description={recipeName}
+              onClick={() => setSelectedRecipe(recipeName)}
+            />
+          </EuiFlexItem>
+        ))}
     </EuiFlexGrid>
   </EuiPageTemplate.Section>
 );
