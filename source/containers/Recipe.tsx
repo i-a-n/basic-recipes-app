@@ -66,6 +66,7 @@ export const Recipe = ({
               <EuiListGroupItem
                 key={index}
                 label={getIngredientLabel(ingredient)}
+                wrapText
               />
             ))}
           </EuiListGroup>

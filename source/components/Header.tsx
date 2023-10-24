@@ -2,11 +2,8 @@ import React from "react";
 
 import {
   EuiPageTemplate,
-  EuiHeader,
   EuiFlexGroup,
   EuiFlexItem,
-  EuiSpacer,
-  EuiSelectableTemplateSitewide,
   EuiSearchBar,
 } from "@elastic/eui";
 
@@ -18,21 +15,19 @@ export const Header = ({
   <EuiPageTemplate.Section
     grow={false}
     bottomBorder="extended"
-    paddingSize="none"
+    paddingSize="m"
     restrictWidth={false}
+    style={{ backgroundColor: "black" }}
   >
-    <EuiHeader theme="dark">
-      <EuiFlexGroup justifyContent="center">
-        <EuiFlexItem style={{ maxWidth: "600px" }}>
-          <EuiSpacer size="xs" />
-          <EuiSearchBar
-            onChange={(query) => {
-              console.log("changed query up here", query);
-              setSearchQuery(query.queryText);
-            }}
-          />
-        </EuiFlexItem>
-      </EuiFlexGroup>
-    </EuiHeader>
+    <EuiFlexGroup justifyContent="center">
+      <EuiFlexItem style={{ maxWidth: "600px" }}>
+        <EuiSearchBar
+          onChange={(query) => {
+            console.log("changed query up here", query);
+            setSearchQuery(query.queryText);
+          }}
+        />
+      </EuiFlexItem>
+    </EuiFlexGroup>
   </EuiPageTemplate.Section>
 );

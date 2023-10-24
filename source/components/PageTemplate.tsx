@@ -7,6 +7,6 @@ export const PageTemplate = ({
   children: React.ReactElement;
 }) => (
   <EuiProvider colorMode="light">
-    <EuiPageTemplate>{children}</EuiPageTemplate>
+    <EuiPageTemplate grow={false}>{children}</EuiPageTemplate>
   </EuiProvider>
 );

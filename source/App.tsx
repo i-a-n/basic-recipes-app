@@ -17,6 +17,16 @@ import { Dashboard } from "./containers/Dashboard";
 import { Recipe } from "./containers/Recipe";
 import { countLabelsInRecipes } from "./utilities";
 
+// These next few lines are to make icons work. See:
+// https://github.com/elastic/eui/tree/v89.1.0/wiki/consuming-eui#failing-icon-imports
+import { appendIconComponentCache } from "@elastic/eui/es/components/icon/icon";
+import { icon as EuiIconCross } from "@elastic/eui/es/components/icon/assets/cross";
+import { icon as EuiIconSearch } from "@elastic/eui/es/components/icon/assets/search";
+appendIconComponentCache({
+  cross: EuiIconCross,
+  search: EuiIconSearch,
+});
+
 const App = () => {
   const [selectedRecipe, setSelectedRecipe] = useState("");
   const [filteredRecipes, setFilteredRecipes] = useState(recipes); // Assuming recipes is an object
@@ -94,6 +104,7 @@ const App = () => {
           <EuiFacetGroup layout="horizontal" gutterSize="l">
             {labelsArray.map((label) => (
               <EuiFacetButton
+                key={`facet-${label.label}`}
                 onClick={() => handleFacetClick(label.label)}
                 quantity={label.count}
                 isSelected={recipeFilters.includes(label.label)}

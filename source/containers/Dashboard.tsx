@@ -19,7 +19,7 @@ export const Dashboard = ({
       {Object.keys(recipes)
         .sort()
         .map((recipeName) => (
-          <EuiFlexItem grow={false} key={recipeName}>
+          <EuiFlexItem key={recipeName} grow={true}>
             <EuiCard
               textAlign="left"
               image={`images/${recipeName}.jpg`}
