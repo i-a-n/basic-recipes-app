@@ -20,7 +20,7 @@ export const Header = ({
     style={{ backgroundColor: "black" }}
   >
     <EuiFlexGroup justifyContent="center">
-      <EuiFlexItem style={{ maxWidth: "600px" }}>
+      <EuiFlexItem grow={false} style={{ width: "700px", maxWidth: "75vw" }}>
         <EuiSearchBar
           onChange={(query) => {
             console.log("changed query up here", query);

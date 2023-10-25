@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "@elastic/eui/dist/eui_theme_light.css";
 import { recipes, labels, Recipe as RecipeType } from "json-recipes";
-//import { Recipe, Ingredient, Creator } from "json-recipes";
 
 import {
   EuiButton,
@@ -22,9 +21,13 @@ import { countLabelsInRecipes } from "./utilities";
 import { appendIconComponentCache } from "@elastic/eui/es/components/icon/icon";
 import { icon as EuiIconCross } from "@elastic/eui/es/components/icon/assets/cross";
 import { icon as EuiIconSearch } from "@elastic/eui/es/components/icon/assets/search";
+import { icon as EuiIconGrid } from "@elastic/eui/es/components/icon/assets/grid";
+import { icon as EuiIconList } from "@elastic/eui/es/components/icon/assets/list";
 appendIconComponentCache({
   cross: EuiIconCross,
   search: EuiIconSearch,
+  grid: EuiIconGrid,
+  list: EuiIconList,
 });
 
 const App = () => {
@@ -33,7 +36,8 @@ const App = () => {
   const [recipeFilters, setRecipeFilters] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
 
-  // This effect updates filteredRecipes whenever recipeFilters changes
+  // This effect updates filteredRecipes whenever recipeFilters changes or the search term is
+  // updated
   useEffect(() => {
     let recipesThatMatchedQuery: RecipeType[];
     if (searchQuery) {
@@ -54,7 +58,8 @@ const App = () => {
           }
           return recipesThatMatchedQuery.includes(recipe);
         }
-        // Assuming labels is an array of strings. The recipe is included if all filters are in the recipe's labels
+        // Assuming labels is an array of strings.
+        // The recipe is included if all filters are in the recipe's labels
         return (
           recipe.labels &&
           recipeFilters.some((filter) => recipe.labels?.includes(filter)) &&
