@@ -100,11 +100,6 @@ const App = () => {
     <PageTemplate>
       <>
         <Header setSearchQuery={setSearchQuery} />
-        <EuiPageTemplate.Header
-          description="it is an app to keep recipes"
-          pageTitle="basic recipes app"
-          tabs={[]}
-        />
         <EuiPageTemplate.Section color="plain">
           <EuiFacetGroup layout="horizontal" gutterSize="l">
             {labelsArray.map((label) => (

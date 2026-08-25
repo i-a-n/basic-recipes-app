@@ -18,23 +18,23 @@ export const Dashboard = ({
   recipes: { [key: string]: RecipeType };
   setSelectedRecipe: (recipeTitle: RecipeType["title"]) => void;
 }) => {
-  const [selectedView, setSelectedView] = useState("grid");
+  const [selectedView, setSelectedView] = useState("list");
 
   return (
     <EuiPageTemplate.Section>
       <EuiFlexGroup gutterSize="xs" responsive={false} justifyContent="flexEnd">
         <EuiFlexItem grow={false}>
           <EuiButtonIcon
-            display={selectedView === "grid" ? "base" : "empty"}
-            iconType="grid"
-            onClick={() => setSelectedView("grid")}
+            display={selectedView === "list" ? "base" : "empty"}
+            iconType="list"
+            onClick={() => setSelectedView("list")}
           />
         </EuiFlexItem>
         <EuiFlexItem grow={false}>
           <EuiButtonIcon
-            display={selectedView === "list" ? "base" : "empty"}
-            iconType="list"
-            onClick={() => setSelectedView("list")}
+            display={selectedView === "grid" ? "base" : "empty"}
+            iconType="grid"
+            onClick={() => setSelectedView("grid")}
           />
         </EuiFlexItem>
       </EuiFlexGroup>
@@ -49,7 +49,7 @@ export const Dashboard = ({
               <EuiFlexItem key={recipeName} grow={true}>
                 <EuiCard
                   textAlign="left"
-                  image={`images/${recipeName}.jpg`}
+                  image={`images/${recipeName}.jpeg`}
                   title={recipes[recipeName].title}
                   description={recipes[recipeName].description}
                   onClick={() => setSelectedRecipe(recipeName)}

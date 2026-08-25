@@ -82,7 +82,7 @@ export const Recipe = ({
       <EuiFlyoutHeader hasBorder>
         <EuiFlexGroup>
           <EuiFlexItem grow={false} style={{ maxWidth: "200px" }}>
-            <img src={`./images/${recipeSlug}.jpg`} />
+            <img src={`./images/${recipeSlug}.jpeg`} />
           </EuiFlexItem>
           <EuiFlexItem>
             <EuiTitle size="s">
